@@ -1,0 +1,43 @@
+<?php
+/**
+ * This helper contains a list of functions used throughout the application
+ * @copyright  Copyright (c) 2016 Benjamin BALET
+ * @license    http://opensource.org/licenses/AGPL-3.0 AGPL-3.0
+ * @link       https://github.com/bbalet/karthanea
+ * @since      0.1.0
+ */
+
+ if (!defined('BASEPATH')) { exit('No direct script access allowed'); }
+
+/**
+ * Internal utility function
+ * make sure a resource is reloaded every time
+ * @author Benjamin BALET <benjamin.balet@gmail.com>
+ */
+function expires_now() {
+    // Date in the past
+    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+    // always modified
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+    // HTTP/1.1
+    header("Cache-Control: no-store, no-cache, must-revalidate");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    // HTTP/1.0
+    header("Pragma: no-cache");
+}
+
+/**
+ * Sanitizes an input (GET/POST) coming from outside a form (eg Ajax request)
+ * @param string $value value to be cleansed from problematic characters
+ * @return string value where problematic characters have been removed
+ * @author Benjamin BALET <benjamin.balet@gmail.com>
+ */
+function sanitize($value)
+{
+    $value = trim($value);
+    $value = str_replace('\\','',$value);
+    $value = strtr($value,array_flip(get_html_translation_table(HTML_ENTITIES)));
+    $value = strip_tags($value);
+    $value = htmlspecialchars($value);
+    return $value;
+}
