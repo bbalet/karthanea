@@ -39,10 +39,10 @@ class Calls extends CI_Controller {
 
 	/**
 	 * Edit an existing call
-	 * @param int $billId identifier of the contract
+	 * @param int $callId identifier of the call
 	 * @author Benjamin BALET <benjamin.balet@gmail.com>
 	 */
-	public function edit($billId)
+	public function edit($callId)
 	{
 		$data['title'] = 'Edit a call';
 		$this->load->view('templates/header', $data);
@@ -52,13 +52,13 @@ class Calls extends CI_Controller {
 	}
 
 	/**
-	 * View an existing bill
-	 * @param int $billId identifier of the contract
+	 * View an existing call
+	 * @param int $callId identifier of the call
 	 * @author Benjamin BALET <benjamin.balet@gmail.com>
 	 */
-	public function view($billId)
+	public function view($callId)
 	{
-		$data['title'] = 'View a bill';
+		$data['title'] = 'View a call';
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/menu', $data);
 		$this->load->view('bills/view', $data);

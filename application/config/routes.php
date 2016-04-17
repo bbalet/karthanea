@@ -50,6 +50,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
+//Admin : user management
+$route['users/employees'] = 'users/employees';
+$route['users/export'] = 'users/export';
+$route['users/import'] = 'users/import';
+$route['users/reset/(:num)'] = 'users/reset/$1';
+$route['users/create'] = 'users/create';
+$route['users/edit/(:num)'] = 'users/edit/$1';
+$route['users/delete/(:num)'] = 'users/delete/$1';
+$route['users/check/login'] = 'users/check_login';
+$route['users'] = 'users';
+
+//Session management
+$route['connection/login'] = 'connection/login';
+$route['connection/logout'] = 'connection/logout';
+$route['connection/forgetpassword'] = 'connection/forgetpassword';
+
+//Client management
 $route['clients/(:num)/contracts'] = 'clients/contracts/$1';
 $route['clients/(:num)/bills'] = 'clients/bills/$1';
 $route['clients/(:num)/dashboard'] = 'clients/dashboard/$1';
@@ -60,20 +77,26 @@ $route['clients/search/any'] = 'clients/doSearch';
 $route['clients/create'] = 'clients/create';
 $route['clients/(:num)/edit'] = 'clients/edit/$1';
 
+//Bill/Invoice management
 $route['bills/create'] = 'bills/create';
 $route['bills/(:num)/view'] = 'bills/view/$1';
 $route['bills/(:num)/export'] = 'bills/export/$1';
 
+//Contract management
 $route['contracts/create'] = 'contracts/create';
 $route['contracts/(:num)/view'] = 'contracts/view/$1';
 $route['contracts/(:num)/bills'] = 'contracts/bills/$1';
 $route['contracts/(:num)/export'] = 'contracts/export/$1';
 
+//Call center management
 $route['calls/unlinked'] = 'calls/unlinked';
 $route['calls/create'] = 'calls/create';
 $route['calls/search'] = 'calls/search';
 $route['calls/search/ajax'] = 'calls/ajaxSearch';
 $route['calls/search/any'] = 'calls/doSearch';
+
+//REST API
+$route['api/tests'] = 'api/getTests';
 
 $route['default_controller'] = 'clients/search';
 $route['404_override'] = '';

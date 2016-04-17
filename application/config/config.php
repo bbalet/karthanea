@@ -511,3 +511,23 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+/*
+|--------------------------------------------------------------------------
+| Application configuration
+|--------------------------------------------------------------------------
+| 
+| E-mail configuration is stored into config/email.php
+| 
+| 
+| from_name - E-mail sender
+|
+| 
+| 
+|
+| 
+| 
+*/
+
+$config['from_name'] = 'no.reply@karthanea.org';
+

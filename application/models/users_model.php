@@ -1,19 +1,10 @@
 <?php
-/*
- * This file is part of sokun.
- *
- * sokun is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * sokun is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with sokun. If not, see <http://www.gnu.org/licenses/>.
+/**
+ * This model contains all functions for managing users
+ * @copyright  Copyright (c) 2016 Benjamin BALET
+ * @license    http://opensource.org/licenses/AGPL-3.0 AGPL-3.0
+ * @link       https://github.com/bbalet/karthanea
+ * @since      0.1.0
  */
 
 class Users_model extends CI_Model {
@@ -116,8 +107,7 @@ class Users_model extends CI_Model {
             'login' => $this->input->post('login'),
             'email' => $this->input->post('email'),
             'password' => $hash,
-            'role' => $role,
-            'language' => $this->input->post('language')
+            'role' => $role
         );
         $this->db->insert('users', $data);
 
@@ -149,8 +139,7 @@ class Users_model extends CI_Model {
             'lastname' => $this->input->post('lastname'),
             'login' => $this->input->post('login'),
             'email' => $this->input->post('email'),
-            'role' => $role,
-            'language' => $this->input->post('language')
+            'role' => $role
         );
 
         $this->db->where('id', $this->input->post('id'));
@@ -165,10 +154,13 @@ class Users_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function reset_password($id, $CipheredNewPassword) {
-        //Load password hasher for create/update functions
-        $this->load->library('bcrypt');
-        //Hash the clear password using bcrypt
-        $hash = $this->bcrypt->hash_password($this->input->post('password'));
+        $password = $this->randomPassword(10);
+
+        //Hash the clear password using bcrypt (8 iterations)
+        $salt = '$2a$08$' . substr(strtr(base64_encode($this->getRandomBytes(16)), '+', '.'), 0, 22) . '$';
+        $hash = crypt($password, $salt);
+
+        //Store the new password into db
         $data = array(
             'password' => $hash
         );
@@ -184,12 +176,12 @@ class Users_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function resetClearPassword($id) {
-        //Load password hasher for create/update functions
-        $this->load->library('bcrypt');
-        //generate a random password of length 10
         $password = $this->randomPassword(10);
-        //Hash the clear password using bcrypt
-        $hash = $this->bcrypt->hash_password($password);
+
+        //Hash the clear password using bcrypt (8 iterations)
+        $salt = '$2a$08$' . substr(strtr(base64_encode($this->getRandomBytes(16)), '+', '.'), 0, 22) . '$';
+        $hash = crypt($password, $salt);
+        
         //Store the new password into db
         $data = array(
             'password' => $hash
@@ -219,8 +211,6 @@ class Users_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function check_credentials($login, $password) {
-        //Load password hasher for create/update functions
-        $this->load->library('bcrypt');
         $this->db->from('users');
         $this->db->where('login', $login);
         $query = $this->db->get();
@@ -230,7 +220,8 @@ class Users_model extends CI_Model {
             return false;
         } else {
             $row = $query->row();
-            if ($this->bcrypt->check_password($password, $row->password)) {
+            $hash = crypt($password, $row->password);
+            if ($hash == $row->password) {
                 // Password does match stored password.
                 if (((int) $row->role & 1)) {
                     $is_admin = true;
@@ -264,8 +255,6 @@ class Users_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function check_authentication($login, $password) {
-        //Load password hasher for create/update functions
-        $this->load->library('bcrypt');
         $this->db->from('users');
         $this->db->where('login', $login);
         $query = $this->db->get();
@@ -275,7 +264,8 @@ class Users_model extends CI_Model {
             return false;
         } else {
             $row = $query->row();
-            if ($this->bcrypt->check_password($password, $row->password)) {
+            $hash = crypt($password, $row->password);
+            if ($hash == $row->password) {
                 // Password does match stored password.
                 return $row->id;
             } else {
@@ -352,5 +342,36 @@ class Users_model extends CI_Model {
         }
         $query = $this->db->get_where('roles', array('id' => $id));
         return $query->row_array();
+    }
+
+    /**
+     * Generate some random bytes by using openssl, dev/urandom or random
+     * @param int $count length of the random string
+     * @return string a string of pseudo-random bytes (must be encoded)
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    protected function getRandomBytes($length) {
+        if(function_exists('openssl_random_pseudo_bytes')) {
+          $rnd = openssl_random_pseudo_bytes($length, $strong);
+          if ($strong === TRUE)
+            return $rnd;
+        }
+        $sha =''; $rnd ='';
+        if (file_exists('/dev/urandom')) {
+          $fp = fopen('/dev/urandom', 'rb');
+          if ($fp) {
+              if (function_exists('stream_set_read_buffer')) {
+                  stream_set_read_buffer($fp, 0);
+              }
+              $sha = fread($fp, $length);
+              fclose($fp);
+          }
+        }
+        for ($i=0; $i<$length; $i++) {
+          $sha  = hash('sha256',$sha.mt_rand());
+          $char = mt_rand(0,62);
+          $rnd .= chr(hexdec($sha[$char].$sha[$char+1]));
+        }
+        return $rnd;
     }
 }

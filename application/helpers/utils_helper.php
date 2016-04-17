@@ -10,6 +10,23 @@
  if (!defined('BASEPATH')) { exit('No direct script access allowed'); }
 
 /**
+ * Check if user is connected, redirect to login form otherwise
+ * Set the user context by retrieving infos from session
+ * @param reference to CI Controller object
+ * @author Benjamin BALET <benjamin.balet@gmail.com>
+ */
+function setUserContext($controller) {
+    if (!$controller->session->userdata('logged_in')) {
+        $controller->session->set_userdata('last_page', current_url());
+        redirect('connection/login');
+    }
+    $controller->fullname = $controller->session->userdata('firstname') . ' ' .
+            $controller->session->userdata('lastname');
+    $controller->is_admin = $controller->session->userdata('is_admin');
+    $controller->user_id = $controller->session->userdata('id');
+}
+
+/**
  * Internal utility function
  * make sure a resource is reloaded every time
  * @author Benjamin BALET <benjamin.balet@gmail.com>
