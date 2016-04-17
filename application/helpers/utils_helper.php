@@ -27,6 +27,19 @@ function setUserContext($controller) {
 }
 
 /**
+ * Prepare an array containing information about the current user
+ * @param reference to CI Controller object
+ * @return array data to be passed to the view
+ * @author Benjamin BALET <benjamin.balet@gmail.com>
+ */
+function getUserContext($controller) {
+    $data['fullname'] = $controller->fullname;
+    $data['is_admin'] = $controller->is_admin;
+    $data['user_id'] = $controller->user_id;
+    return $data;
+}
+
+/**
  * Internal utility function
  * make sure a resource is reloaded every time
  * @author Benjamin BALET <benjamin.balet@gmail.com>

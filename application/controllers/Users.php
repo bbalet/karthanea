@@ -19,8 +19,6 @@ class Users extends CI_Controller {
         parent::__construct();
         setUserContext($this);
         $this->load->model('users_model');
-        $this->lang->load('users', $this->language);
-        $this->lang->load('global', $this->language);
     }
     
     /**
@@ -28,14 +26,14 @@ class Users extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function index() {
-        $this->auth->check_is_granted('list_users');
+        //$this->auth->check_is_granted('list_users');
         expires_now();
         $data = getUserContext($this);
         $data['users'] = $this->users_model->get_users();
-        $data['title'] = lang('users_index_title');
+        $data['title'] = 'List of users';
         $data['flash_partial_view'] = $this->load->view('templates/flash', $data, true);
         $this->load->view('templates/header', $data);
-        $this->load->view('menu/index', $data);
+        $this->load->view('templates/menu', $data);
         $this->load->view('users/index', $data);
         $this->load->view('templates/footer');
     }
@@ -45,7 +43,7 @@ class Users extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function employees() {
-        $this->auth->check_is_granted('list_users');
+        //$this->auth->check_is_granted('list_users');
         expires_now();
         $data = getUserContext($this);
         $data['employees'] = $this->users_model->get_all_employees();
@@ -59,18 +57,18 @@ class Users extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function edit($id) {
-        $this->auth->check_is_granted('edit_user');
+        //$this->auth->check_is_granted('edit_user');
         expires_now();
         $data = getUserContext($this);
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $data['title'] = lang('users_edit_html_title');
+        $data['title'] = 'Edit user';
         
-        $this->form_validation->set_rules('firstname', lang('users_edit_field_firstname'), 'required');
-        $this->form_validation->set_rules('lastname', lang('users_edit_field_lastname'), 'required');
-        $this->form_validation->set_rules('login', lang('users_edit_field_login'), 'required');
-        $this->form_validation->set_rules('email', lang('users_edit_field_email'), 'required');
-        $this->form_validation->set_rules('role[]', lang('users_edit_field_role'), 'required');
+        $this->form_validation->set_rules('firstname', 'firstname', 'required');
+        $this->form_validation->set_rules('lastname', 'lastname', 'required');
+        $this->form_validation->set_rules('login', 'login', 'required');
+        $this->form_validation->set_rules('email', 'email', 'required');
+        $this->form_validation->set_rules('role[]', 'role', 'required');
         
         $data['users_item'] = $this->users_model->get_users($id);
         if (empty($data['users_item'])) {
@@ -85,7 +83,7 @@ class Users extends CI_Controller {
             $this->load->view('templates/footer');
         } else {
             $this->users_model->update_users();
-            $this->session->set_flashdata('msg', lang('users_edit_flash_msg_success'));
+            $this->session->set_flashdata('msg', 'The user has been successfully updated');
             if (isset($_GET['source'])) {
                 redirect($_GET['source']);
             } else {
@@ -100,7 +98,7 @@ class Users extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function delete($id) { 
-        $this->auth->check_is_granted('delete_user');
+        //$this->auth->check_is_granted('delete_user');
         //Test if user exists
         $data['users_item'] = $this->users_model->get_users($id);
         if (empty($data['users_item'])) {
@@ -110,7 +108,7 @@ class Users extends CI_Controller {
             $this->users_model->delete_user($id);
         }
         log_message('info', 'User #' . $id . ' has been deleted by user #' . $this->session->userdata('id'));
-        $this->session->set_flashdata('msg', lang('users_delete_flash_msg_success'));
+        $this->session->set_flashdata('msg', 'The user has been successfully deleted');
         redirect('users');
     }
 
@@ -121,7 +119,7 @@ class Users extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function reset($id) {
-        $this->auth->check_is_granted('change_password', $id);
+        //$this->auth->check_is_granted('change_password', $id);
 
         //Test if user exists
         $data['users_item'] = $this->users_model->get_users($id);
@@ -142,9 +140,7 @@ class Users extends CI_Controller {
                 //Send an e-mail to the user so as to inform that its password has been changed
                 $user = $this->users_model->get_users($id);
                 $this->load->library('email');
-                $this->load->library('polyglot');
-                $usr_lang = $this->polyglot->code2language($user['language']);
-                $this->lang->load('email', $usr_lang);
+
 
                 $this->load->library('parser');
                 $data = array(
@@ -152,7 +148,7 @@ class Users extends CI_Controller {
                     'Firstname' => $user['firstname'],
                     'Lastname' => $user['lastname']
                 );
-                $message = $this->parser->parse('emails/' . $user['language'] . '/password_reset', $data, TRUE);
+                $message = $this->parser->parse('emails/password_reset', $data, TRUE);
                 if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
                     $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
                 } else {
@@ -207,10 +203,6 @@ class Users extends CI_Controller {
             
             //Send an e-mail to the user so as to inform that its account has been created
             $this->load->library('email');
-            $this->load->library('polyglot');
-            $usr_lang = $this->polyglot->code2language($this->input->post('language'));
-            $this->lang->load('email', $usr_lang);
-            
             $this->load->library('parser');
             $data = array(
                 'Title' => lang('email_user_create_title'),
@@ -263,41 +255,5 @@ class Users extends CI_Controller {
         } else {
             echo 'false';
         }
-    }
-
-    /**
-     * Action: export the list of all users into an Excel file
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function export() {
-        expires_now();
-        $this->auth->check_is_granted('export_user');
-        $this->load->library('excel');
-        $this->excel->setActiveSheetIndex(0);
-        $this->excel->getActiveSheet()->setTitle(lang('users_export_title'));
-        $this->excel->getActiveSheet()->setCellValue('A1', lang('users_export_thead_id'));
-        $this->excel->getActiveSheet()->setCellValue('B1', lang('users_export_thead_firstname'));
-        $this->excel->getActiveSheet()->setCellValue('C1', lang('users_export_thead_lastname'));
-        $this->excel->getActiveSheet()->setCellValue('D1', lang('users_export_thead_email'));
-        
-        $this->excel->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true);
-        $this->excel->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        $users = $this->users_model->get_users();
-        $line = 2;
-        foreach ($users as $user) {
-            $this->excel->getActiveSheet()->setCellValue('A' . $line, $user['id']);
-            $this->excel->getActiveSheet()->setCellValue('B' . $line, $user['firstname']);
-            $this->excel->getActiveSheet()->setCellValue('C' . $line, $user['lastname']);
-            $this->excel->getActiveSheet()->setCellValue('D' . $line, $user['email']);
-            $line++;
-        }
-
-        $filename = 'users.xls';
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="' . $filename . '"');
-        header('Cache-Control: max-age=0');
-        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-        $objWriter->save('php://output');
     }
 }
