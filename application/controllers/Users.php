@@ -78,7 +78,7 @@ class Users extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $data['roles'] = $this->users_model->get_roles();
             $this->load->view('templates/header', $data);
-            $this->load->view('menu/index', $data);
+            $this->load->view('templates/menu', $data);
             $this->load->view('users/edit', $data);
             $this->load->view('templates/footer');
         } else {
@@ -177,24 +177,24 @@ class Users extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function create() {
-        $this->auth->check_is_granted('create_user');
+        //$this->auth->check_is_granted('create_user');
         expires_now();
         $data = getUserContext($this);
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $data['title'] = lang('users_create_title');
+        $data['title'] = 'Create a new user';
         $data['roles'] = $this->users_model->get_roles();
 
-        $this->form_validation->set_rules('firstname', lang('users_create_field_firstname'), 'required');
-        $this->form_validation->set_rules('lastname', lang('users_create_field_lastname'), 'required');
-        $this->form_validation->set_rules('login', lang('users_create_field_login'), 'required|callback_login_check');
-        $this->form_validation->set_rules('email', lang('users_create_field_email'), 'required');
-        $this->form_validation->set_rules('password', lang('users_create_field_password'), 'required');
-        $this->form_validation->set_rules('role[]', lang('users_create_field_role'), 'required');
+        $this->form_validation->set_rules('firstname', 'firstname', 'required');
+        $this->form_validation->set_rules('lastname', 'lastname', 'required');
+        $this->form_validation->set_rules('login', 'login', 'required|callback_login_check');
+        $this->form_validation->set_rules('email', 'email', 'required');
+        $this->form_validation->set_rules('password', 'password', 'required');
+        $this->form_validation->set_rules('role[]', 'role', 'required');
 
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header', $data);
-            $this->load->view('menu/index', $data);
+            $this->load->view('templates/menu', $data);
             $this->load->view('users/create', $data);
             $this->load->view('templates/footer');
         } else {
@@ -224,7 +224,7 @@ class Users extends CI_Controller {
             $this->email->message(htmlentities_htmltags($message));
             $this->email->send();
             
-            $this->session->set_flashdata('msg', lang('users_create_flash_msg_success'));
+            $this->session->set_flashdata('msg', 'The user has been succesfully created');
             redirect('users');
         }
     }
@@ -237,7 +237,7 @@ class Users extends CI_Controller {
      */
     public function login_check($login) {
         if (!$this->users_model->is_login_available($login)) {
-            $this->form_validation->set_message('login_check', lang('users_create_login_check'));
+            $this->form_validation->set_message('login_check', 'Username already exists.');
             return FALSE;
         } else {
             return TRUE;
