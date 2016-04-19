@@ -83,16 +83,15 @@ class Users_model extends CI_Model {
     }
 
     /**
-     * Insert a new user into the database. Inserted data are coming from an
-     * HTML form
+     * Insert a new user into the database. Inserted data are coming from a HTML form
      * @return string deciphered password (so as to send it by e-mail in clear)
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function set_users() {
+    public function setUsers() {
         //Hash the clear password using bcrypt
-        $this->load->library('bcrypt');
         $password = $this->input->post('password');
-        $hash = $this->bcrypt->hash_password($password);
+        $salt = '$2a$08$' . substr(strtr(base64_encode($this->getRandomBytes(16)), '+', '.'), 0, 22) . '$';
+        $hash = crypt($password, $salt);
 
         //Role field is a binary mask
         $role = 0;

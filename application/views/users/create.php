@@ -103,7 +103,7 @@ echo form_open('users/create', $attributes); ?>
         if (fieldname == "") {
             return true;
         } else {
-            bootbox.alert(<?php echo lang('users_create_mandatory_js_msg');?>);
+            bootbox.alert("The field " + fieldname + " is mandatory.");
             return false;
         }
     }
@@ -117,7 +117,7 @@ function password_generator(len) {
     var length = (len)?(len):(10);
     var string = "abcdefghijklnopqrstuvwxyz";
     var numeric = '0123456789';
-    var punctuation = '!@#$%;:?,./-=';
+    var punctuation = '!?=';
     var password = "";
     var character = "";
     while(password.length < length) {
@@ -182,7 +182,7 @@ function password_generator(len) {
                     if (msg == "true") {
                         $("#target").submit();
                     } else {
-                        bootbox.alert("<?php echo lang('users_create_login_check');?>");
+                        bootbox.alert("Username already exists.");
                     }
                 });
             }

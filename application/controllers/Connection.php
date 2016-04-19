@@ -85,6 +85,7 @@ class Connection extends CI_Controller {
             
             //Send an e-mail to the user requesting a new password
             $this->load->library('email');
+            $this->email->set_newline("\r\n");  //Workaround FakeSMTP
             $this->load->library('parser');
             $data = array(
                 'Title' => 'Your password has been reset',
@@ -102,6 +103,7 @@ class Connection extends CI_Controller {
             }
             $this->email->to($user->email);
             $this->email->subject('[sokun] Your password has been reset');
+            $this->email->set_mailtype("html");
             $this->email->message($message);
             $this->email->send();
             echo "OK";

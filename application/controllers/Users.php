@@ -37,19 +37,6 @@ class Users extends CI_Controller {
         $this->load->view('users/index', $data);
         $this->load->view('templates/footer');
     }
-
-    /**
-     * Display the modal pop-up content of the list of employees
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function employees() {
-        //$this->auth->check_is_granted('list_users');
-        expires_now();
-        $data = getUserContext($this);
-        $data['employees'] = $this->users_model->get_all_employees();
-        $data['title'] = lang('employees_index_title');
-        $this->load->view('users/employees', $data);
-    }
     
     /**
      * Display a for that allows updating a given user
@@ -140,11 +127,10 @@ class Users extends CI_Controller {
                 //Send an e-mail to the user so as to inform that its password has been changed
                 $user = $this->users_model->get_users($id);
                 $this->load->library('email');
-
-
+                $this->email->set_newline("\r\n");  //Workaround FakeSMTP
                 $this->load->library('parser');
                 $data = array(
-                    'Title' => lang('email_password_reset_title'),
+                    'Title' => 'Your password has been reset',
                     'Firstname' => $user['firstname'],
                     'Lastname' => $user['lastname']
                 );
@@ -152,16 +138,16 @@ class Users extends CI_Controller {
                 if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
                     $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
                 } else {
-                    $this->email->from('do.not@reply.me', 'Sokun');
+                    $this->email->from('do.not@reply.me', 'Karthanea');
                 }
                 $this->email->to($user['email']);
-                $this->email->subject(lang('email_password_reset_subject'));
+                $this->email->subject('[Karthanea] Your password has been reset');
                 $this->email->set_mailtype("html");
                 $this->email->message(htmlentities_htmltags($message));
                 $this->email->send();
                 
                 //Inform back the user by flash message
-                $this->session->set_flashdata('msg', lang('users_reset_flash_msg_success'));
+                $this->session->set_flashdata('msg', 'The password has been succesfully changed');
                 if ($this->is_admin) {
                     redirect('users');
                 }
@@ -198,28 +184,29 @@ class Users extends CI_Controller {
             $this->load->view('users/create', $data);
             $this->load->view('templates/footer');
         } else {
-            $password = $this->users_model->set_users();
+            $password = $this->users_model->setUsers();
             log_message('info', 'User ' . $this->input->post('login') . ' has been created by user #' . $this->session->userdata('id'));
             
             //Send an e-mail to the user so as to inform that its account has been created
             $this->load->library('email');
+            $this->email->set_newline("\r\n");  //Workaround FakeSMTP
             $this->load->library('parser');
             $data = array(
-                'Title' => lang('email_user_create_title'),
+                'Title' => 'Your account has been created',
                 'BaseURL' => base_url(),
                 'Firstname' => $this->input->post('firstname'),
                 'Lastname' => $this->input->post('lastname'),
                 'Login' => $this->input->post('login'),
                 'Password' => $password
             );
-            $message = $this->parser->parse('emails/' . $this->input->post('language') . '/new_user', $data, TRUE);
+            $message = $this->parser->parse('emails/new_user', $data, TRUE);
             if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
                 $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
             } else {
-               $this->email->from('do.not@reply.me', 'Sokun');
+               $this->email->from('do.not@reply.me', 'Karthanea');
             }
             $this->email->to($this->input->post('email'));
-            $this->email->subject(lang('email_user_create_subject'));
+            $this->email->subject('[Karthanea] Your account has been created');
             $this->email->set_mailtype("html");
             $this->email->message(htmlentities_htmltags($message));
             $this->email->send();

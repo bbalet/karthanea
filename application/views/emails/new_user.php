@@ -1,27 +1,16 @@
 <?php
-/*
- * This file is part of sokun.
- *
- * sokun is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * sokun is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with sokun. If not, see <http://www.gnu.org/licenses/>.
+/**
+ * This view is parsed to compose the email sent to a new user
+ * @copyright  Copyright (c) 2016 Benjamin BALET
+ * @license    http://opensource.org/licenses/AGPL-3.0 AGPL-3.0
+ * @link       https://github.com/bbalet/karthanea
+ * @since      0.1.0
  */
-
-    //You can change the content of this template
 ?>
 <html>
     <body>
         <h3>{Title}</h3>
-        Welcome to sokun {Firstname} {Lastname}. Please use these credentials to <a href="{BaseURL}">login to the system</a> :
+        Welcome to Karthanea {Firstname} {Lastname}. Please use these credentials to <a href="{BaseURL}">login to the system</a> :
         <table border="0">
             <tr>
                 <td>Login</td><td>{Login}</td>

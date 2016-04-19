@@ -15,15 +15,17 @@
 
 <?php /*
 //User Management only if connected user is an admin of the system
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clients <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url();?>clients/search">Search</a></li>
-                <li><a href="<?php echo base_url();?>clients/create">Create</a></li>
-              </ul>
-            </li>
-            */
-            ?>
+            <?php if ($is_admin == TRUE) { ?>
+            <ul class="nav navbar-nav">			  
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_admin_title');?> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?php echo base_url();?>users"><?php echo lang('menu_admin_list_users');?></a></li>
+                  <li><a href="<?php echo base_url();?>users/create"><?php echo lang('menu_admin_add_user');?></a></li>
+                </ul>
+              </li>
+            </ul>
+            <?php } */?>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clients <span class="caret"></span></a>
@@ -54,6 +56,7 @@
             </div>
             <button type="submit" class="btn btn-success">Search</button>
             <a href="#" class="btn btn-success" title="Reset password" id="cmdChangeMyPwd"><span class="glyphicon glyphicon-lock"></span></a>
+            <a href="<?php echo base_url();?>connection/logout" class="btn btn-warning" title="Logout"><span class="glyphicon glyphicon-off"></span></a>
           </form>
 
           </ul>

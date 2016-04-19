@@ -1,22 +1,11 @@
 <?php
-/*
- * This file is part of sokun.
- *
- * sokun is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * sokun is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with sokun. If not, see <http://www.gnu.org/licenses/>.
+/**
+ * This view is parsed to compose the email sent to a user changing its password
+ * @copyright  Copyright (c) 2016 Benjamin BALET
+ * @license    http://opensource.org/licenses/AGPL-3.0 AGPL-3.0
+ * @link       https://github.com/bbalet/karthanea
+ * @since      0.1.0
  */
-
-    //You can change the content of this template
 ?>
 <html>
     <body>
