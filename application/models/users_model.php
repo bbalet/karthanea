@@ -252,7 +252,7 @@ class Users_model extends CI_Model {
      * @return int useridentifier if succesfully authenticated, -1 otherwise
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function check_authentication($login, $password) {
+    public function checkAuthenticationFromRest($login, $password) {
         $this->db->from('users');
         $this->db->where('login', $login);
         $query = $this->db->get();

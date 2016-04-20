@@ -22,23 +22,25 @@ class Api extends CI_Controller {
     }
 
     /**
-     * REST End Point : Display the list of the tests (whatever the campaign)
+     * REST End Point : Get a client record based on its ID
+     * @param int $clientId identifier of a client
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function getTests() {
+    public function getClient($id) {
         //Check if input parameters are set
         if ($this->input->get_post('login') != NULL  && $this->input->get_post('password') != NULL) {
             //Check user credentials
             $login = $this->input->get_post('login');
             $password = $this->input->get_post('password');
             $this->load->model('users_model');
-            $user_id = $this->users_model->check_authentication($login, $password);
+            $user_id = $this->users_model->checkAuthenticationFromRest($login, $password);
             if ($user_id != -1) {
-                $this->load->model('tests_model');
-                $this->expires_now();
+                expires_now();
                 header("Content-Type: application/json");
-                $tests = $this->tests_model->get_tests();
-                echo json_encode($tests);
+                $client = new stdClass;
+                $client->Firstname = 'Georges';
+                $client->Lastname = 'DURAND';
+                echo json_encode($client);
             } else {    //Wrong inputs
                 $this->output->set_header("HTTP/1.1 422 Unprocessable entity");
             }
@@ -48,24 +50,28 @@ class Api extends CI_Controller {
     }
 
     /**
-     * REST End Point : Get the steps of a test
-     * @param int $id identifier of a test
+     * REST End Point : Get the list of all clients
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function getSteps($id) {
+    public function getClients() {
         //Check if input parameters are set
         if ($this->input->get_post('login') != NULL  && $this->input->get_post('password') != NULL) {
             //Check user credentials
             $login = $this->input->get_post('login');
             $password = $this->input->get_post('password');
             $this->load->model('users_model');
-            $user_id = $this->users_model->check_authentication($login, $password);
+            $user_id = $this->users_model->checkAuthenticationFromRest($login, $password);
             if ($user_id != -1) {
-                $this->load->model('tests_model');
-                $this->expires_now();
+                expires_now();
                 header("Content-Type: application/json");
-                $steps = $this->tests_model->get_steps($id);
-                echo json_encode($steps);
+                $clientA = new stdClass;
+                $clientA->Firstname = 'Georges';
+                $clientA->Lastname = 'DURAND';
+                $clientB = new stdClass;
+                $clientB->Firstname = 'Benjamin';
+                $clientB->Lastname = 'BALET';
+                $clients = array($clientA, $clientB);
+                echo json_encode($clients);
             } else {    //Wrong inputs
                 $this->output->set_header("HTTP/1.1 422 Unprocessable entity");
             }
@@ -73,33 +79,4 @@ class Api extends CI_Controller {
             $this->output->set_header("HTTP/1.1 403 Forbidden");
         }
     }
-
-    /**
-     * REST End Point : Get the latest execution status of a test
-     * @param int $id identifier of a test
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function getLatestExecutionStatus($id) {
-        //Check if input parameters are set
-        if ($this->input->get_post('login') != NULL  && $this->input->get_post('password') != NULL) {
-            //Check user credentials
-            $login = $this->input->get_post('login');
-            $password = $this->input->get_post('password');
-            $this->load->model('users_model');
-            $user_id = $this->users_model->check_authentication($login, $password);
-            if ($user_id != -1) {
-                $this->load->model('executions_model');
-                $this->expires_now();
-                header("Content-Type: application/json");
-                $status = $this->executions_model->last_execution_status($id);
-                echo json_encode($status);
-            } else {    //Wrong inputs
-                $this->output->set_header("HTTP/1.1 422 Unprocessable entity");
-            }
-        } else {    //Unauthorized
-            $this->output->set_header("HTTP/1.1 403 Forbidden");
-        }
-    }
-
-
 }
