@@ -1,6 +1,6 @@
 <?php 
 /**
- * This view displays the result of a search request.
+ * This view displays the result of a search request (clients).
  * @copyright  Copyright (c) 2014-2016 Benjamin BALET
  * @license    http://opensource.org/licenses/AGPL-3.0 AGPL-3.0
  * @link       https://github.com/bbalet/karthanea

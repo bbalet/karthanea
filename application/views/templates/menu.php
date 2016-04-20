@@ -44,7 +44,7 @@
               <ul class="dropdown-menu">
                 <li><a href="<?php echo base_url();?>calls/create">Create Call</a></li>
                 <li><a href="<?php echo base_url();?>calls/search">Search for a call</a></li>
-                <li><a href="<?php echo base_url();?>calls/unlink">Calls not linked to client</a></li>
+                <li><a href="<?php echo base_url();?>calls/unlinked">Calls not linked to client</a></li>
               </ul>
             </li>
 

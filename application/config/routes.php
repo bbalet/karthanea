@@ -92,8 +92,11 @@ $route['contracts/(:num)/export'] = 'contracts/export/$1';
 $route['calls/unlinked'] = 'calls/unlinked';
 $route['calls/create'] = 'calls/create';
 $route['calls/search'] = 'calls/search';
+$route['calls/results'] = 'calls/results';
+$route['calls/(:num)/edit'] = 'calls/edit/$1';
 $route['calls/search/ajax'] = 'calls/ajaxSearch';
 $route['calls/search/any'] = 'calls/doSearch';
+$route['calls'] = 'calls/index';
 
 //REST API
 $route['api/tests'] = 'api/getTests';

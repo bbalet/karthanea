@@ -15,12 +15,26 @@ class Calls extends CI_Controller {
 	 * Displays the list of unlinked calls
 	 * @author Benjamin BALET <benjamin.balet@gmail.com>
 	 */
+	public function index()
+	{
+		$data['title'] = 'List of calls';
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/menu', $data);
+		$this->load->view('calls/index', $data);
+		$this->load->view('templates/footer', $data);
+	}
+
+
+	/**
+	 * Displays the list of unlinked calls
+	 * @author Benjamin BALET <benjamin.balet@gmail.com>
+	 */
 	public function unlinked()
 	{
 		$data['title'] = 'List of unlinked calls';
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/menu', $data);
-		$this->load->view('bills/index', $data);
+		$this->load->view('calls/unlinked', $data);
 		$this->load->view('templates/footer', $data);
 	}
 
@@ -47,7 +61,33 @@ class Calls extends CI_Controller {
 		$data['title'] = 'Edit a call';
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/menu', $data);
-		$this->load->view('bills/edit', $data);
+		$this->load->view('calls/edit', $data);
+		$this->load->view('templates/footer', $data);
+	}
+
+	/**
+	 * Search for a call
+	 * @author Benjamin BALET <benjamin.balet@gmail.com>
+	 */
+	public function search()
+	{
+		$data['title'] = 'Search for a call';
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/menu', $data);
+		$this->load->view('calls/search', $data);
+		$this->load->view('templates/footer', $data);
+	}
+
+	/**
+	 * Search for a call
+	 * @author Benjamin BALET <benjamin.balet@gmail.com>
+	 */
+	public function results()
+	{
+		$data['title'] = 'Search results';
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/menu', $data);
+		$this->load->view('calls/results', $data);
 		$this->load->view('templates/footer', $data);
 	}
 
