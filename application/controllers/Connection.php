@@ -27,7 +27,6 @@ class Connection extends CI_Controller {
         $data['title'] = 'Login to the application';
         $this->load->helper('form');
         $this->load->library('form_validation');
-        //Note that we don't receive the password as a clear string
         $this->form_validation->set_rules('login', 'login', 'required');
         $this->form_validation->set_rules('password', 'password', 'required');
 
@@ -38,7 +37,7 @@ class Connection extends CI_Controller {
             $this->load->view('templates/footer');
         } else {
             $this->load->model('users_model');
-            $loggedin = $this->users_model->check_credentials($this->input->post('login'), $this->input->post('password'));
+            $loggedin = $this->users_model->checkCredentials($this->input->post('login'), $this->input->post('password'));
             
             if ($loggedin == FALSE) {
                 log_message('error', '{controllers/session/login} Invalid login id or password for user=' . $this->input->post('login'));

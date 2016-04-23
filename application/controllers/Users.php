@@ -29,7 +29,7 @@ class Users extends CI_Controller {
         //$this->auth->check_is_granted('list_users');
         expires_now();
         $data = getUserContext($this);
-        $data['users'] = $this->users_model->get_users();
+        $data['users'] = $this->users_model->getUsers();
         $data['title'] = 'List of users';
         $data['flash_partial_view'] = $this->load->view('templates/flash', $data, true);
         $this->load->view('templates/header', $data);
@@ -57,19 +57,19 @@ class Users extends CI_Controller {
         $this->form_validation->set_rules('email', 'email', 'required');
         $this->form_validation->set_rules('role[]', 'role', 'required');
         
-        $data['users_item'] = $this->users_model->get_users($id);
+        $data['users_item'] = $this->users_model->getUsers($id);
         if (empty($data['users_item'])) {
             show_404();
         }
 
         if ($this->form_validation->run() === FALSE) {
-            $data['roles'] = $this->users_model->get_roles();
+            $data['roles'] = $this->users_model->getRoles();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/menu', $data);
             $this->load->view('users/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->users_model->update_users();
+            $this->users_model->updateUsers();
             $this->session->set_flashdata('msg', 'The user has been successfully updated');
             if (isset($_GET['source'])) {
                 redirect($_GET['source']);
@@ -87,12 +87,12 @@ class Users extends CI_Controller {
     public function delete($id) { 
         //$this->auth->check_is_granted('delete_user');
         //Test if user exists
-        $data['users_item'] = $this->users_model->get_users($id);
+        $data['users_item'] = $this->users_model->getUsers($id);
         if (empty($data['users_item'])) {
             log_message('debug', '{controllers/users/delete} user not found');
             show_404();
         } else {
-            $this->users_model->delete_user($id);
+            $this->users_model->deleteUser($id);
         }
         log_message('info', 'User #' . $id . ' has been deleted by user #' . $this->session->userdata('id'));
         $this->session->set_flashdata('msg', 'The user has been successfully deleted');
@@ -109,7 +109,7 @@ class Users extends CI_Controller {
         //$this->auth->check_is_granted('change_password', $id);
 
         //Test if user exists
-        $data['users_item'] = $this->users_model->get_users($id);
+        $data['users_item'] = $this->users_model->getUsers($id);
         if (empty($data['users_item'])) {
             log_message('debug', '{controllers/users/reset} user not found');
             show_404();
@@ -122,10 +122,10 @@ class Users extends CI_Controller {
             if ($this->form_validation->run() === FALSE) {
                 $this->load->view('users/reset', $data);
             } else {
-                $this->users_model->reset_password($id, $this->input->post('password'));
+                $this->users_model->resetPassword($id, $this->input->post('password'));
                 
                 //Send an e-mail to the user so as to inform that its password has been changed
-                $user = $this->users_model->get_users($id);
+                $user = $this->users_model->getUsers($id);
                 $this->load->library('email');
                 $this->email->set_newline("\r\n");  //Workaround FakeSMTP
                 $this->load->library('parser');
@@ -169,7 +169,7 @@ class Users extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $data['title'] = 'Create a new user';
-        $data['roles'] = $this->users_model->get_roles();
+        $data['roles'] = $this->users_model->getRoles();
 
         $this->form_validation->set_rules('firstname', 'firstname', 'required');
         $this->form_validation->set_rules('lastname', 'lastname', 'required');
@@ -223,7 +223,7 @@ class Users extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function login_check($login) {
-        if (!$this->users_model->is_login_available($login)) {
+        if (!$this->users_model->isLoginAvailable($login)) {
             $this->form_validation->set_message('login_check', 'Username already exists.');
             return FALSE;
         } else {
@@ -237,7 +237,7 @@ class Users extends CI_Controller {
      */
     public function check_login() {
         header("Content-Type: text/plain");
-        if ($this->users_model->is_login_available($this->input->post('login'))) {
+        if ($this->users_model->isLoginAvailable($this->input->post('login'))) {
             echo 'true';
         } else {
             echo 'false';

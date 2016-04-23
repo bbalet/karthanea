@@ -13,20 +13,18 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
-<?php /*
-//User Management only if connected user is an admin of the system
-            <?php if ($is_admin == TRUE) { ?>
-            <ul class="nav navbar-nav">			  
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_admin_title');?> <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="<?php echo base_url();?>users"><?php echo lang('menu_admin_list_users');?></a></li>
-                  <li><a href="<?php echo base_url();?>users/create"><?php echo lang('menu_admin_add_user');?></a></li>
-                </ul>
-              </li>
-            </ul>
-            <?php } */?>
+            <!-- User Management is only available if the connected user is an admin of the system -->
+            <?php if ($is_admin === TRUE) { ?>			  
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo base_url();?>users">List of users</a></li>
+                <li><a href="<?php echo base_url();?>users/create">Create a new user</a></li>
+              </ul>
+            </li>
+            <?php } ?>
 
+             <!-- Client Management -->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clients <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -35,10 +33,7 @@
               </ul>
             </li>
 
-<?php
-//Call Center Management
-?>
-
+            <!-- Call Center Management -->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Call Center <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -60,7 +55,7 @@
           </form>
 
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
     </nav>
 

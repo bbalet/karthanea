@@ -18,7 +18,7 @@ class Api extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
-        // http://localhost/sokun/api/tests?login=bbalet&password=bbalet
+        // http://localhost/karthanea/api/getClients?login=bbalet&password=bbalet
     }
 
     /**

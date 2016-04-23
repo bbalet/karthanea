@@ -22,7 +22,7 @@ class Users_model extends CI_Model {
      * @return array record of users
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function get_users($id = 0) {
+    public function getUsers($id = 0) {
         $this->db->select('users.*');
         if ($id === 0) {
             $query = $this->db->get('users');
@@ -33,35 +33,12 @@ class Users_model extends CI_Model {
     }
 
     /**
-     * Get the list of employees
-     * @return array record of users
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function get_all_employees() {
-        $this->db->select('id, firstname, lastname, email');
-        $query = $this->db->get('users');
-        return $query->result_array();
-    }
-
-    /**
-     * Get the label of a given user id
-     * @param type $id
-     * @return string label
-     */
-    public function get_label($id) {
-        $record = $this->get_users($id);
-        if (count($record) > 0) {
-            return $record['firstname'] . ' ' . $record['lastname'];
-        }
-    }
-
-    /**
      * Check if a login can be used before creating the user
      * @param type $login login identifier
      * @return bool true if available, false otherwise
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function is_login_available($login) {
+    public function isLoginAvailable($login) {
         $this->db->from('users');
         $this->db->where('login', $login);
         $query = $this->db->get();
@@ -78,7 +55,7 @@ class Users_model extends CI_Model {
      * @param int $id identifier of the user
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function delete_user($id) {
+    public function deleteUser($id) {
         $query = $this->db->delete('users', array('id' => $id));
     }
 
@@ -113,12 +90,11 @@ class Users_model extends CI_Model {
     }
 
     /**
-     * Update a given user in the database. Update data are coming from an
-     * HTML form
+     * Update a given user in the database. Update data are coming from a HTML form
      * @return type
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function update_users() {
+    public function updateUsers() {
 
         //Role field is a binary mask
         $role = 0;
@@ -141,28 +117,6 @@ class Users_model extends CI_Model {
         );
 
         $this->db->where('id', $this->input->post('id'));
-        $result = $this->db->update('users', $data);
-        return $result;
-    }
-
-    /**
-     * Update a given user in the database. Update data are coming from an
-     * HTML form
-     * @return int number of affected rows
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function reset_password($id, $CipheredNewPassword) {
-        $password = $this->randomPassword(10);
-
-        //Hash the clear password using bcrypt (8 iterations)
-        $salt = '$2a$08$' . substr(strtr(base64_encode($this->getRandomBytes(16)), '+', '.'), 0, 22) . '$';
-        $hash = crypt($password, $salt);
-
-        //Store the new password into db
-        $data = array(
-            'password' => $hash
-        );
-        $this->db->where('id', $id);
         $result = $this->db->update('users', $data);
         return $result;
     }
@@ -208,7 +162,7 @@ class Users_model extends CI_Model {
      * @return bool true if the user is succesfully authenticated, false otherwise
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function check_credentials($login, $password) {
+    public function checkCredentials($login, $password) {
         $this->db->from('users');
         $this->db->where('login', $login);
         $query = $this->db->get();
@@ -333,7 +287,7 @@ class Users_model extends CI_Model {
      * @return array record of roles
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function get_roles($id = 0) {
+    public function getRoles($id = 0) {
         if ($id === 0) {
             $query = $this->db->get('roles');
             return $query->result_array();
