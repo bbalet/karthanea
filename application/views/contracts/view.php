@@ -12,21 +12,23 @@
 
 <h1>View a contract</h1>
 
-<p>Client : <a href="<?php echo base_url();?>clients/22/dashboard">Georges DURAND</a></p>
+<p>Client : <a target="_blank" href="<?php echo base_url();?>clients/22/dashboard">Georges DURAND</a></p>
 <p>Date : <span class="text-muted">1 April 2016</span></p>
 <p>Status : <span class="text-muted">Opened</span></p>
 <p>Type : <span class="text-muted">Car</span></p>
 <p>Ref : <span class="text-muted">Car 1245XY12</span></p>
 
 
-  <a href="<?php echo base_url();?>contracts/<?php echo 1;?>/export" target="_blank" class="btn btn-primary">
-  	<span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Export</a>
-&nbsp;
-  <a href="<?php echo base_url();?>contracts/22/bills" class="btn btn-info">
+<a href="<?php echo base_url();?>clients/22/contracts" class="btn btn-info">
+  	<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;Back to list of contracts</a>
+<a href="<?php echo base_url();?>contracts/22/bills" class="btn btn-info">
   	<span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;Bills for this contract</a>
 &nbsp;
-  <a href="<?php echo base_url();?>clients/22/contracts" class="btn btn-info">
-  	<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;Back to list of contracts</a>
+<a href="<?php echo base_url();?>contracts/<?php echo 1;?>/export" target="_blank" class="btn btn-primary">
+  	<span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Export</a>
+&nbsp;
+<a href="<?php echo base_url();?>contracts/<?php echo 1;?>/edit" class="btn btn-primary">
+  	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;Edit</a>
 
 <h3>Terms</h3>
 

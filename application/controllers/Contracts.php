@@ -10,6 +10,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Contracts extends CI_Controller {
+    
+    /**
+     * Default constructor
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function __construct() {
+        parent::__construct();
+        setUserContext($this);
+    }
 
     /**
      * View an existing contract
@@ -17,6 +26,7 @@ class Contracts extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function view($contractId) {
+        $data = getUserContext($this);
         $data['title'] = 'Contract / View';
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);
@@ -30,10 +40,25 @@ class Contracts extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function create() {
+        $data = getUserContext($this);
         $data['title'] = 'Contract / Create';
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);
         $this->load->view('contracts/create', $data);
+        $this->load->view('templates/footer', $data);
+    }
+    
+    /**
+     * Edit a contract
+     * @param int $contractId identifier of the contract
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function edit($contractId) {
+        $data = getUserContext($this);
+        $data['title'] = 'Contract / Edit';
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/menu', $data);
+        $this->load->view('contracts/edit', $data);
         $this->load->view('templates/footer', $data);
     }
 
@@ -43,6 +68,7 @@ class Contracts extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function bills($contractId) {
+        $data = getUserContext($this);
         $data['title'] = 'Contract / Bills';
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);

@@ -30,7 +30,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Content of table `users`
 --
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `login`, `email`, `password`, `role`) VALUES
-(1, 'Benjamin', 'BALET', 'bbalet', 'benjamin.balet@gmail.com', '$2a$08$LeUbaGFqJjLSAN7to9URsuHB41zcmsMBgBhpZuFp2y2OTxtVcMQ.C', 1);
+(1, 'Benjamin', 'BALET', 'bbalet', 'benjamin.balet@gmail.com', '$2a$08$LeUbaGFqJjLSAN7to9URsuHB41zcmsMBgBhpZuFp2y2OTxtVcMQ.C', 1),
+(2, 'John', 'DOE', 'jdoe', 'jdoe@test.org', '$2a$08$FQgfZLiIIxTaGMtFsD1XRONffM6pZDLERlggXW/ADc8LAcC9a/p7i', 2),
+(3, 'Admin', 'ADMINISTRATOR', 'admin', 'admin@test.org', '$2a$08$xBRQSqAoOtiMwvgKiq1kh.VXk6U4fTIqCkHik.hGQKsZgaC9MPOu.', 1);
 
 --
 -- Structure of table `roles`

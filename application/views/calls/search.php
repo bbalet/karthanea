@@ -122,12 +122,6 @@
   </div>
 </div>
 
-<link href="<?php echo base_url();?>assets/ckeditor/contents.css" rel="stylesheet">
-<script type="text/javascript" src="<?php echo base_url();?>assets/ckeditor/ckeditor.js"></script>
-<link href="<?php echo base_url();?>assets/datatable/media/css/jquery.dataTables.min.css" rel="stylesheet">
-<script type="text/javascript" src="<?php echo base_url();?>assets/datatable/media/js/jquery.dataTables.min.js"></script>
-
-
 <link href="<?php echo base_url();?>assets/datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
 <script type="text/javascript" src="<?php echo base_url();?>assets/datepicker/js/bootstrap-datepicker.min.js"></script>
 

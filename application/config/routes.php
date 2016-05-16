@@ -80,11 +80,13 @@ $route['clients/(:num)/edit'] = 'clients/edit/$1';
 //Bill/Invoice management
 $route['bills/create'] = 'bills/create';
 $route['bills/(:num)/view'] = 'bills/view/$1';
+$route['bills/(:num)/edit'] = 'bills/edit/$1';
 $route['bills/(:num)/export'] = 'bills/export/$1';
 
 //Contract management
 $route['contracts/create'] = 'contracts/create';
 $route['contracts/(:num)/view'] = 'contracts/view/$1';
+$route['contracts/(:num)/edit'] = 'contracts/edit/$1';
 $route['contracts/(:num)/bills'] = 'contracts/bills/$1';
 $route['contracts/(:num)/export'] = 'contracts/export/$1';
 
