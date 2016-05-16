@@ -15,12 +15,15 @@ We thank the following open source projects for the components used by Karthanea
 #### Backend
 
 * CodeIgniter MVC framework http://www.codeigniter.com/
-* BCRYPT password hasher https://github.com/dwightwatson/codeigniter-bcrypt
-* Excel import/export https://github.com/PHPOffice/PHPExcel
+* PDF export http://www.fpdf.org/
 
 #### Frontend
 
-* bootstrap 3
-* JQuery 2 and JQuery-UI
-* FullCalendar http://arshaw.com/fullcalendar/
+* Bootstrap 3 http://getbootstrap.com/
+* JQuery 2 https://jquery.com/
+* CKEditor http://ckeditor.com/
+* ChartJS http://www.chartjs.org/
+* Bootstrap Datepicker https://github.com/eternicode/bootstrap-datepicker
+* Bootbox http://bootboxjs.com/
+* MomentJS http://momentjs.com/
 * Datatable https://datatables.net/
