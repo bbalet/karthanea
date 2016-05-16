@@ -38,6 +38,7 @@ class Api extends CI_Controller {
                 expires_now();
                 header("Content-Type: application/json");
                 $client = new stdClass;
+                $client->Id = 1;
                 $client->Firstname = 'Georges';
                 $client->Lastname = 'DURAND';
                 echo json_encode($client);
@@ -65,9 +66,11 @@ class Api extends CI_Controller {
                 expires_now();
                 header("Content-Type: application/json");
                 $clientA = new stdClass;
+                $clientA->Id = 1;
                 $clientA->Firstname = 'Georges';
                 $clientA->Lastname = 'DURAND';
                 $clientB = new stdClass;
+                $clientB->Id = 2;
                 $clientB->Firstname = 'Benjamin';
                 $clientB->Lastname = 'BALET';
                 $clients = array($clientA, $clientB);

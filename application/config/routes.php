@@ -101,8 +101,8 @@ $route['calls/search/any'] = 'calls/doSearch';
 $route['calls'] = 'calls/index';
 
 //REST API
-$route['api/getClients'] = 'api/getClients';
-$route['api/getClient/(:num)'] = 'api/getClient/$1';
+$route['api/clients'] = 'api/getClients';
+$route['api/clients/(:num)'] = 'api/getClient/$1';
 
 $route['default_controller'] = 'clients/search';
 $route['404_override'] = '';
