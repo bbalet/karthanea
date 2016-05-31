@@ -62,22 +62,22 @@
                 </tr>
             </thead>
             <tbody>
-	            <tr>
-	            	<td>22</td>
-	                <td>Georges</td>
-	                <td>DURAND</td>
-	                <td>Car 1245XY12<br />
-	                Moto 125BC45
-	                </td>
-	            </tr>
-	            <tr>
-	            	<td>33</td>
-	                <td>Benjamin</td>
-	                <td>BALET</td>
-	                <td>Car 5368AB13
-	                </td>
-	            </tr>
-                </tbody>
+                <tr>
+                    <td>22</td>
+                    <td>Georges</td>
+                    <td>DURAND</td>
+                    <td>Car 1245XY12<br />
+                    Moto 125BC45
+                    </td>
+                </tr>
+                <tr>
+                    <td>33</td>
+                    <td>Benjamin</td>
+                    <td>BALET</td>
+                    <td>Car 5368AB13
+                    </td>
+                </tr>
+              </tbody>
         </table>
       </div>
       <div class="modal-footer">
@@ -92,17 +92,20 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/ckeditor/ckeditor.js"></script>
 <link href="<?php echo base_url();?>assets/datatable/media/css/jquery.dataTables.min.css" rel="stylesheet">
 <script type="text/javascript" src="<?php echo base_url();?>assets/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/datatable/extensions/Select/js/dataTables.select.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	//Create editor
-	CKEDITOR.replace( 'editor' );
+    //Create editor
+    CKEDITOR.replace( 'editor' );
 
-	//On click select client, show the modal form
+    //On click select client, show the modal form
     $('#cmdSelectClient').click(function() {
         $('#frmSelectClient').modal('show');
         //Transform the HTML table
-    	$('#clients').dataTable();
+        $('#clients').dataTable({
+            select: true
+        });
     });
 });
 

@@ -92,6 +92,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/ckeditor/ckeditor.js"></script>
 <link href="<?php echo base_url();?>assets/datatable/media/css/jquery.dataTables.min.css" rel="stylesheet">
 <script type="text/javascript" src="<?php echo base_url();?>assets/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/datatable/extensions/Select/js/dataTables.select.min.js"></script>
 
 <script type="text/javascript">
 var	clsStopwatch = function() {
@@ -174,7 +175,9 @@ $(document).ready(function() {
     $('#cmdSelectClient').click(function() {
         $('#frmSelectClient').modal('show');
         //Transform the HTML table
-        $('#clients').dataTable();
+        $('#clients').dataTable({
+            select: true
+        });
     });
 });
 

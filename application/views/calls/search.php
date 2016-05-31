@@ -1,6 +1,6 @@
 <?php 
 /**
- * This view displays the search form (for a call)
+ * This view displays the search form (for a phone call)
  * @copyright  Copyright (c) 2014-2016 Benjamin BALET
  * @license    http://opensource.org/licenses/AGPL-3.0 AGPL-3.0
  * @link       https://github.com/bbalet/karthanea
@@ -22,9 +22,9 @@
   </span>
 </div>
 
-<label for="txtOperator">Client</label>
+<label for="txtOperator">Call center operator</label>
 <div class="input-group">
-  <input name="txtClient" type="text" class="form-control" placeholder="Select an operator" readonly="readonly">
+  <input name="txtOperator" type="text" class="form-control" placeholder="Select an operator" readonly="readonly">
   <span class="input-group-btn">
       <a id="cmdSelectOperator" class="btn btn-info">Select</a>
   </span>
@@ -32,9 +32,6 @@
 
 <label for="txtDate">Date of Call</label>
 <input name="txtDate" type="text" class="form-control datepicker" placeholder="Select a date" readonly="readonly">
-
-<label for="txtOperator">Call center operator</label>
-<input name="txtOperator" type="text" class="form-control" value="Vichay HENG" readonly="readonly">
 
 <br />
 
@@ -51,7 +48,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Select a client</h4>
       </div>
-      <div id="frmTestSelectBody" class="modal-body">
+      <div id="frmClientSelectBody" class="modal-body">
         <table cellpadding="0" cellspacing="0" border="0" class="display" id="clients" width="100%">
             <thead>
                 <tr>
@@ -96,7 +93,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Select an operator</h4>
       </div>
-      <div id="frmTestSelectBody" class="modal-body">
+      <div id="frmOperatorSelectBody" class="modal-body">
         <table cellpadding="0" cellspacing="0" border="0" class="display" id="operators" width="100%">
             <thead>
                 <tr>
@@ -124,6 +121,9 @@
 
 <link href="<?php echo base_url();?>assets/datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
 <script type="text/javascript" src="<?php echo base_url();?>assets/datepicker/js/bootstrap-datepicker.min.js"></script>
+<link href="<?php echo base_url();?>assets/datatable/media/css/jquery.dataTables.min.css" rel="stylesheet">
+<script type="text/javascript" src="<?php echo base_url();?>assets/datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/datatable/extensions/Select/js/dataTables.select.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -134,14 +134,18 @@ $(document).ready(function() {
     $('#cmdSelectClient').click(function() {
         $('#frmSelectClient').modal('show');
         //Transform the HTML table
-        $('#clients').dataTable();
+        $('#clients').dataTable({
+            select: true
+        });
     });
 
     //On click select operator, show the modal form
     $('#cmdSelectOperator').click(function() {
         $('#frmSelectOperator').modal('show');
         //Transform the HTML table
-        $('#operators').dataTable();
+        $('#operators').dataTable({
+            select: true
+        });
     });
 });
 
